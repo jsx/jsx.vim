@@ -1,3 +1,3 @@
 
-au BufRead,BufNewFile *.jsx ft=jsx
+au BufRead,BufNewFile *.jsx setlocal ft=jsx
 
