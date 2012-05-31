@@ -8,10 +8,13 @@ Set the following command in your `.vimrc`:
 
     set rtp+=/path/to/jsx.vim
 
+# AUTHOR
+
+Fuji Goro (gfx) <gfuji@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-Copyright (c) 2012 Fuji Goro (gfx) <gfuji@cpan.org>.
+Copyright (c) 2012 DeNA, Co., Ltd (http://dena.jp/intl/).
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
