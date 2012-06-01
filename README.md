@@ -10,7 +10,7 @@ Set the following command in your `.vimrc`:
 
 # AUTHOR
 
-Fuji Goro (gfx) <gfuji@cpan.org>
+Fuji Goro (gfx) <fuji.goro@dena.jp>
 
 # COPYRIGHT AND LICENSE
 
