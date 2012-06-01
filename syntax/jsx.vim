@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language:	JSX
-" Maintainer:	
+" Maintainer:	Fuji Goro (gfx) <fuji.goro@dena.jp>
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -39,17 +39,17 @@ syn keyword jsxRepeat		while for do in
 syn keyword jsxBranch		break continue
 syn keyword jsxOperator		new delete instanceof typeof as __noconvert__
 syn keyword jsxType		Array boolean Boolean Date number Number Map int Object string String RegExp JSON MayBeUndefined variant void
-syn keyword jsxStatement	return
+syn keyword jsxStatement	return var const
 syn keyword jsxBoolean		true false
 syn keyword jsxNull		null undefined
-syn keyword jsxIdentifier	this var const
+syn keyword jsxIdentifier	this __FILE__ __LINE__
 syn keyword jsxLabel		case default
 syn keyword jsxException	try catch finally throw
 syn keyword jsxClass		class interface mixin
-syn keyword jsxModifiers	final override native __fake__ extends abstract static implements
+syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__
 syn keyword jsxImport		import from
 syn keyword jsxEntryPoint	_Main _Test main
-syn keyword jsxReserved		byte char double enum export float goto import long package private protected public short synchronized throws transient volatile arguments
+syn keyword jsxReserved		byte char double enum export float goto long package private protected public short synchronized throws transient volatile arguments
 syn keyword jsxDebug		debugger assert log
 
 if exists("jsx_fold")
@@ -105,7 +105,7 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxBraces		Function
   HiLink jsxError		Error
   HiLink jsParenError		jsxError
-  HiLink jsxNull		Keyword
+  HiLink jsxNull		Constant
   HiLink jsxBoolean		Boolean
   HiLink jsxRegexpString	String
 
@@ -113,8 +113,8 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxLabel		Label
   HiLink jsxException		Exception
   HiLink jsxClass		Structure
-  HiLink jsxModifiers		Keyword
-  HiLink jsxImport		Keyword
+  HiLink jsxModifiers		Structure
+  HiLink jsxImport		Identifier
   HiLink jsxEntryPoint		Keyword
   HiLink jsxReserved		Keyword
   HiLink jsxDebug		Debug
