@@ -1,6 +1,8 @@
 " Vim syntax file
-" Language:	JSX
-" Maintainer:	Fuji Goro (gfx) <fuji.goro@dena.jp>
+" Language:    JSX
+" Maintainer:  Fuji, Goro (gfx) <fuji.goro@dena.jp>
+" URL:         http://github.com/jsx/jsx.vim
+" License:     MIT License
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
