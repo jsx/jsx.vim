@@ -6,7 +6,14 @@ jsx.vim
 
 Set the following command in your `.vimrc`:
 
+    " set the repository path
     set rtp+=/path/to/jsx.vim
+
+    " when you use vundle
+    Bundle 'git://github.com/jsx/jsx.vim.git'
+
+    " when you use NeoBundle
+    NeoBundle 'git://github.com/jsx/jsx.vim.git'
 
 # AUTHOR
 
