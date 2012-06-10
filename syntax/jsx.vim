@@ -22,25 +22,26 @@ if version < 600 && exists("jsx_fold")
   unlet jsx_fold
 endif
 
-
 syn keyword jsxCommentTodo	TODO FIXME XXX TBD contained
 syn match   jsxLineComment	"\/\/.*" contains=@Spell,jsxCommentTodo
 syn match   jsxCommentSkip	"^[ \t]*\*\($\|[ \t]\+\)"
 syn region  jsxComment		start="/\*"  end="\*/" contains=@Spell,jsxCommentTodo
-syn match   jsxSpecial	       "\\\d\d\d\|\\."
-syn region  jsxStringD	       start=+"+  skip=+\\\\\|\\"+  end=+"\|$+	contains=jsxSpecial,@htmlPreproc
-syn region  jsxStringS	       start=+'+  skip=+\\\\\|\\'+  end=+'\|$+	contains=jsxSpecial,@htmlPreproc
 
-syn match   jsxSpecialCharacter	"'\\.'"
-syn match   jsxNumber		 "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syn match   jsxSpecial		"\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\."
+syn region  jsxStringD		start=+"+  skip=+\\\\\|\\"+  end=+"\|$+	contains=jsxSpecial,@htmlPreproc
+syn region  jsxStringS		start=+'+  skip=+\\\\\|\\'+  end=+'\|$+	contains=jsxSpecial,@htmlPreproc
+
+syn match   jsxInteger		/-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>/
+syn match   jsxFloat		/\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
 syn keyword jsxSpecialNumbers	NaN Infinity
 syn region  jsxRegexpString	start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
 
 syn keyword jsxConditional	if else switch
-syn keyword jsxRepeat		while for do in
+syn keyword jsxRepeat		while for do
 syn keyword jsxBranch		break continue
-syn keyword jsxOperator		new delete instanceof typeof as __noconvert__
+syn keyword jsxOperator		new delete in instanceof typeof as __noconvert__
 syn keyword jsxType		Array boolean Boolean Date number Number Map int Object string String RegExp JSON MayBeUndefined variant void
+syn keyword jsxException	Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 syn keyword jsxStatement	return var const
 syn keyword jsxBoolean		true false
 syn keyword jsxNull		null undefined
@@ -49,7 +50,7 @@ syn keyword jsxLabel		case default
 syn keyword jsxException	try catch finally throw
 syn keyword jsxClass		class interface mixin
 syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__
-syn keyword jsxImport		import from
+syn keyword jsxImport		import from into
 syn keyword jsxEntryPoint	_Main _Test main
 syn keyword jsxReserved		byte char double enum export float goto long package private protected public short synchronized throws transient volatile arguments
 syn keyword jsxDebug		debugger assert log
@@ -93,10 +94,9 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxSpecial		Special
   HiLink jsxStringS		String
   HiLink jsxStringD		String
-  "HiLink jsxCharacter		Character
-  HiLink jsxSpecialCharacter	jsxSpecial
-  HiLink jsxNumber		Number
-  HiLink jsxSpecialNumbers	Constant
+  HiLink jsxInteger		Number
+  HiLink jsxFloat		Number
+  HiLink jsxSpecialNumbers	Number
   HiLink jsxConditional		Conditional
   HiLink jsxRepeat		Repeat
   HiLink jsxBranch		Conditional
@@ -105,8 +105,6 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxStatement		Statement
   HiLink jsxFunction		Function
   HiLink jsxBraces		Function
-  HiLink jsxError		Error
-  HiLink jsParenError		jsxError
   HiLink jsxNull		Constant
   HiLink jsxBoolean		Boolean
   HiLink jsxRegexpString	String
@@ -116,7 +114,7 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxException		Exception
   HiLink jsxClass		Structure
   HiLink jsxModifiers		Structure
-  HiLink jsxImport		Identifier
+  HiLink jsxImport		Special
   HiLink jsxEntryPoint		Keyword
   HiLink jsxReserved		Keyword
   HiLink jsxDebug		Debug
