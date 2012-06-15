@@ -13,6 +13,7 @@ function! jsx#complete(findstart, base)
     while pos > 0 && line[pos - 1] =~ '\s'
       let pos -= 1
     endwhile
+    let pos = pos != 0 ? pos : col('.') - 1
     let b:jsx_complete_pos = pos
     return pos
   endif
