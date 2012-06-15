@@ -22,7 +22,7 @@ function! jsx#complete(findstart, base)
 
   let command = printf('%s --complete %d:%d %s',
   \  get(g:, 'jsx_command', 'jsx'),
-  \  line('.'), get(b:, 'jsx_complete_pos', col('.')),
+  \  line('.'), get(b:, 'jsx_complete_pos', col('.')) + 1,
   \  shellescape(f)
   \)
 
