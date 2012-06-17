@@ -1,19 +1,24 @@
 # NAME
 
-jsx.vim
+jsx.vim - VIM support for JSX
 
 # USAGE
 
 Set the following command in your `.vimrc`:
 
-    " set the repository path
+```VimL
+    " add the repository path
     set rtp+=/path/to/jsx.vim
 
-    " when you use vundle
+    " when you use a plugin manager (vundle or NeoBundle),
+    " just declare the repository path in your .vimrc
+
+    " for vundle
     Bundle 'git://github.com/jsx/jsx.vim.git'
 
-    " when you use NeoBundle
+    " for NeoBundle
     NeoBundle 'git://github.com/jsx/jsx.vim.git'
+```
 
 # AUTHOR
 
