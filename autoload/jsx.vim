@@ -9,12 +9,15 @@ set cpo&vim
 function! jsx#complete(findstart, base)
   if a:findstart
     let line = getline('.')
-    let pos = col('.') - 1
-    while pos > 0 && line[pos - 1] =~ '\s'
+    let pos = col('.')
+    if pos == col('$')
       let pos -= 1
-    endwhile
-    let pos = pos != 0 ? pos : col('.') - 1
-    let b:jsx_complete_pos = pos
+    endif
+    if pos > 0 && line[pos - 1] =~ '\w'
+      while pos > 0 && line[pos - 1] =~ '\w'
+        let pos -= 1
+      endwhile
+    endif
     return pos
   endif
 
@@ -23,7 +26,7 @@ function! jsx#complete(findstart, base)
 
   let command = printf('%s --complete %d:%d %s',
   \  get(g:, 'jsx_command', 'jsx'),
-  \  line('.'), get(b:, 'jsx_complete_pos', col('.')) + 1,
+  \  line('.'), col('.'),
   \  shellescape(f)
   \)
 
