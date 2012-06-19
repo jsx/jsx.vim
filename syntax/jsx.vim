@@ -51,7 +51,7 @@ syn keyword jsxException	try catch finally throw
 syn keyword jsxClass		class interface mixin
 syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__
 syn keyword jsxImport		import from into
-syn keyword jsxEntryPoint	_Main _Test main
+syn keyword jsxEntryPoint	_Main _Test
 syn keyword jsxReserved		byte char double enum export float goto long package private protected public short synchronized throws transient volatile arguments
 syn keyword jsxDebug		debugger assert log
 
