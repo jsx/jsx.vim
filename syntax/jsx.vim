@@ -56,7 +56,11 @@ syn keyword jsxClass		class interface mixin
 syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__
 syn keyword jsxImport		import from into
 syn keyword jsxEntryPoint	_Main _Test
-syn keyword jsxReserved		byte char double enum export float goto long package private protected public short synchronized throws transient volatile arguments
+" reserved by ECMA-262 but not used in JSX
+syn keyword jsxReserved		enum export let private public protected arguments eval with
+" reserved by Google Closure Compiler
+" defined in src/com/google/javascript/rhino/TokenStream.java
+syn keyword jsxGCCReserved	byte char double float long short goto synchronized throws transient volatile
 syn keyword jsxDebug		debugger assert log
 
 if exists("jsx_fold")
@@ -121,7 +125,8 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxModifiers		Structure
   HiLink jsxImport		Special
   HiLink jsxEntryPoint		Keyword
-  HiLink jsxReserved		Keyword
+  HiLink jsxReserved		Error
+  HiLink jsxGCCReserved		Error
   HiLink jsxDebug		Debug
 
   delcommand HiLink

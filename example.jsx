@@ -28,7 +28,7 @@ class _Main {
 		var a1e10 = +0;
 
 		var s0 = "\x0a\x0d";
-		var s0 = "\u000d";
+		var s1 = "\u000d";
 
 		log true;
 		log false;
