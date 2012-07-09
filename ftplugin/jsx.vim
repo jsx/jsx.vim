@@ -6,6 +6,8 @@
 
 setlocal omnifunc=jsx#complete
 
+compiler jsx
+
 " Tagbar http://majutsushi.github.com/tagbar/
 let g:tagbar_type_jsx = {}
 let g:tagbar_type_jsx.ctagstype = "jsx"
