@@ -1,6 +1,0 @@
---langdef=jsx
---langmap=js:.jsx
---regex-jsx=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*([^)])/\1/,function/
---regex-jsx=/class[ \t]+([A-Za-z0-9._$]+)[ \t]*([^)])/\1/,class/
---regex-jsx=/interface[ \t]+([A-Za-z0-9._$]+)[ \t]*([^)])/\1/,interface/
---regex-jsx=/mixin[ \t]+([A-Za-z0-9._$]+)[ \t]*([^)])/\1/,mixin/
