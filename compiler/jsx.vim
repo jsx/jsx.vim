@@ -15,7 +15,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 CompilerSet makeprg=jsx\ %
-CompilerSet errorformat=[%f:%l]\ %m
+CompilerSet errorformat=[%f:%l:%c]\ %m
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
