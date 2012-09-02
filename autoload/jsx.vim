@@ -24,8 +24,9 @@ function! jsx#complete(findstart, base)
   let f = tempname()
   call writefile(getline(1, '$'), f)
 
-  let command = printf('%s --complete %d:%d %s',
+  let command = printf('%s --input-filename %s --complete %d:%d %s',
   \  get(g:, 'jsx_command', 'jsx'),
+  \  shellescape(expand('%')),
   \  line('.'), col('.'),
   \  shellescape(f)
   \)
