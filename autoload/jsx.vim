@@ -21,24 +21,22 @@ function! jsx#complete(findstart, base)
     return pos
   endif
 
-  let f = tempname()
-  call writefile(getline(1, '$'), f)
+  let input_content = join(getline(1, '$'), "\n")
 
-  let command = printf('%s --input-filename %s --complete %d:%d %s',
+  let command = printf('%s --input-filename %s --complete %d:%d -- -',
   \  get(g:, 'jsx_command', 'jsx'),
-  \  shellescape(expand('%')),
-  \  line('.'), col('.'),
-  \  shellescape(f)
+  \  shellescape(bufname('%')),
+  \  line('.'), col('.')
   \)
 
-  try
-    let ret = join(split(system(command), "\n"), "")
-    sandbox let output = filter(eval(ret), 'stridx(v:val, a:base) == 0')
-  catch
-    let output = []
-  finally
-    call delete(f)
-  endtry
+  "try
+    let ret = system(command, input_content)
+    sandbox let words = eval(ret)
+    let output = filter(words, 'stridx(v:val.word, a:base) == 0')
+  "catch
+  "  let output = []
+  "endtry
+
   return output
 endfunction
 
