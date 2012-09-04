@@ -32,7 +32,9 @@ function! jsx#complete(findstart, base)
   "try
     let ret = system(command, input_content)
     sandbox let words = eval(ret)
-    let output = filter(words, 'stridx(v:val.word, a:base) == 0')
+    let output = filter(
+    \  filter(words, 'stridx(v:val.word, a:base) == 0'),
+    \  'index(get(g:, "jsx#complete_ignore_candidates", []), v:val.word) == -1')
   "catch
   "  let output = []
   "endtry
