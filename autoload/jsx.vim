@@ -6,8 +6,30 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" borrowed from https://github.com/mattn/webapi-vim
-function! jsx#formatDocComment(str) abort
+" borrowed from html.vim in https://github.com/mattn/webapi-vim
+
+function! s:nr2byte(nr)
+  if a:nr < 0x80
+    return nr2char(a:nr)
+  elseif a:nr < 0x800
+    return nr2char(a:nr/64+192).nr2char(a:nr%64+128)
+  else
+    return nr2char(a:nr/4096%16+224).nr2char(a:nr/64%64+128).nr2char(a:nr%64+128)
+  endif
+endfunction
+
+function! s:nr2enc_char(charcode)
+  if &encoding == 'utf-8'
+    return nr2char(a:charcode)
+  endif
+  let char = s:nr2byte(a:charcode)
+  if strlen(char) > 1
+    let char = strtrans(iconv(char, 'utf-8', &encoding))
+  endif
+  return char
+endfunction
+
+function! s:format_doc(str) abort
     let str = a:str
 
     let str = substitute(str, '[ \t\r\n]*</p>[ \t\r\n]*', "\n", 'g')
@@ -76,9 +98,9 @@ function! jsx#complete(findstart, base) abort
 
             if has_key(candidate, "doc")
                 if (candidate.info)
-                    let candidate.info = candidate.info . "\n" . jsx#formatDocComment(candidate.doc)
+                    let candidate.info = candidate.info . "\n" . s:format_doc(candidate.doc)
                 else
-                    let candidate.info = jsx#formatDocComment(candidate.doc)
+                    let candidate.info = s:format_doc(candidate.doc)
                 endif
             endif
 
