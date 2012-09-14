@@ -82,7 +82,7 @@ function! jsx#complete(findstart, base) abort
                 endif
             endif
 
-            if has_key(candidate, "info")
+            if strlen(candidate.info) > 0
                 let candidate.info = candidate.info . "\n[" . candidate.kind . "]"
             else
                 let candidate.info = "[" . candidate.kind . "]"
