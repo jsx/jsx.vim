@@ -77,42 +77,43 @@ function! jsx#complete(findstart, base) abort
     sandbox let candidates = eval(ret)
     let output = []
     for candidate in candidates
-        if stridx(candidate.word, a:base) == 0
-
-            " menu (extra information)
-            if has_key(candidate, "returnType")
-                " function type
-                let candidate.abbr = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
-                let candidate.menu = candidate.returnType
-            elseif has_key(candidate, "type")
-                " variable type
-                let candidate.menu = candidate.type
-            endif
-
-            let candidate.info = ""
-
-            " info (preview window)
-            if has_key(candidate, "type")
-                let candidate.info =  candidate.type
-            endif
-
-            if has_key(candidate, "doc")
-                if (candidate.info)
-                    let candidate.info = candidate.info . "\n" . s:format_doc(candidate.doc)
-                else
-                    let candidate.info = s:format_doc(candidate.doc)
-                endif
-            endif
-
-            if strlen(candidate.info) > 0
-                let candidate.info = candidate.info . "\n[" . candidate.kind . "]"
-            else
-                let candidate.info = "[" . candidate.kind . "]"
-            endif
-
-            call remove(candidate, "kind")
-            call add(output, candidate)
+        if stridx(candidate.word, a:base) != 0
+            continue
         endif
+
+        " menu (extra information)
+        if has_key(candidate, "returnType")
+            " function type
+            let candidate.abbr = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
+            let candidate.menu = ": " . candidate.returnType
+        elseif has_key(candidate, "type")
+            " variable type
+            let candidate.menu = ": " . candidate.type
+        endif
+
+        let candidate.info = ""
+
+        " info (preview window)
+        if has_key(candidate, "type")
+            let candidate.info =  candidate.type
+        endif
+
+        if has_key(candidate, "doc")
+            if (candidate.info)
+                let candidate.info = candidate.info . "\n" . s:format_doc(candidate.doc)
+            else
+                let candidate.info = s:format_doc(candidate.doc)
+            endif
+        endif
+
+        if strlen(candidate.info) > 0
+            let candidate.info = candidate.info . "\n[" . candidate.kind . "]"
+        else
+            let candidate.info = "[" . candidate.kind . "]"
+        endif
+
+        call remove(candidate, "kind")
+        call add(output, candidate)
     endfor
   "catch
   "  let output = []
