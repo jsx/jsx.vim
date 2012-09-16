@@ -129,7 +129,7 @@ function! jsx#complete(findstart, base) abort
       let candidate.info = "var " . candidate.word . " : " . candidate.type
     endif
 
-    if has_key(candidate, "doc")
+    if has_key(candidate, "doc") && strlen(candidate.doc) > 0
       call s:addToInfo(candidate, "\n", s:format_doc(candidate.doc))
     endif
 
