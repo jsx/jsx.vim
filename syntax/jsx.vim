@@ -22,7 +22,8 @@ if version < 600 && exists("jsx_fold")
   unlet jsx_fold
 endif
 
-syn keyword jsxCommentTodo	TODO FIXME XXX TBD contained
+" jsx
+syn keyword jsxCommentTodo	contained TODO FIXME XXX TBD
 syn match   jsxLineComment	"\/\/.*" contains=@Spell,jsxCommentTodo
 syn match   jsxCommentSkip	"^[ \t]*\*\($\|[ \t]\+\)"
 syn region  jsxComment		start="/\*"  end="\*/" contains=@Spell,jsxCommentTodo
@@ -63,6 +64,12 @@ syn keyword jsxReserved		enum export let private public protected arguments eval
 syn keyword jsxGCCReserved	byte char double float long short goto synchronized throws transient volatile
 syn keyword jsxDebug		debugger assert log
 
+" jsxdoc
+syn region  jsxDocComment start="/\*\*"  end="\*/" contains=@Spell,jsxDocTags,jsxCommentTodo
+syn match   jsxDocTags     contained /@\(param\|return\)\>/
+syn match   jsxDocTags     contained /@\(see\|deprecated\|since\)>/
+syn match   jsxDocTags     contained /@\(author\|version\)\>/
+
 if exists("jsx_fold")
     syn match	jsxFunction	"\<function\>"
     syn region	jsxFunctionFold	start="\<function\>.*[^};]$" end="^\z1}.*$" transparent fold keepend
@@ -96,6 +103,8 @@ if version >= 508 || !exists("did_jsx_syn_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
+  HiLink jsxDocComment		Comment
+  HiLink jsxDocTags		Special
   HiLink jsxComment		Comment
   HiLink jsxLineComment		Comment
   HiLink jsxCommentTodo		Todo
