@@ -57,11 +57,8 @@ function! s:format_doc(str) abort
     let str = substitute(str, '&quot;', '"', 'g')
     let str = substitute(str, '&apos;', "'", 'g')
     let str = substitute(str, '&nbsp;', ' ', 'g')
-    let str = substitute(str, '&yen;', '\&#65509;', 'g')
     let str = substitute(str, '&#\(\d\+\);', '\=s:nr2enc_char(submatch(1))', 'g')
-    let str = substitute(str, '&amp;', '\&', 'g')
-    let str = substitute(str, '&raquo;', '>', 'g')
-    let str = substitute(str, '&laquo;', '<', 'g')
+    let str = substitute(str, '&amp;', '&', 'g')
 
     return str
 endfunction
