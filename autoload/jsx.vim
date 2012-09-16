@@ -109,6 +109,8 @@ function! jsx#complete(findstart, base) abort
 
     " show overloaded functions
     let candidate.dup = 1
+    " show mis-cased candidates
+    let candidate.icase = 1
 
     let candidate.info = ""
 
