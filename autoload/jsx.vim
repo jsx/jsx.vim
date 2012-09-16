@@ -8,11 +8,11 @@ set cpo&vim
 
 
 function! s:abbr(word, maxlen) abort
-    if strdisplaywidth(a:word) > a:maxlen
-        return a:word[0 : a:maxlen]. " ..."
-    else
-        return a:word
-    endif
+  if strdisplaywidth(a:word) > a:maxlen
+    return a:word[0 : a:maxlen]. " ..."
+  else
+    return a:word
+  endif
 endfunction
 
 
@@ -85,62 +85,64 @@ function! jsx#complete(findstart, base) abort
   let input_content = join(getline(1, '$'), "\n")
 
   let command = printf('%s --input-filename %s --complete %d:%d -- -',
-              \  get(g:, 'jsx_command', 'jsx'),
-              \  shellescape(bufname('%')),
-              \  line('.'), col('.')
-              \)
+        \  get(g:, 'jsx_command', 'jsx'),
+        \  shellescape(bufname('%')),
+        \  line('.'), col('.')
+        \)
 
-    let max_menu_width = winwidth(winnr())
-                \ - wincol()
-                \ - get(g:, 'jsx_complete_max_menu_width', 22)
+  let max_menu_width = winwidth(winnr())
+        \ - wincol()
+        \ - get(g:, 'jsx_complete_max_menu_width', 22)
 
-  "try
+  try
     let ret = system(command, input_content)
-    sandbox let candidates = eval(ret)
-    let output = []
-    for candidate in candidates
-        if stridx(candidate.word, a:base) != 0
-            continue
-        endif
+    sandbox let data_source = eval(ret)
+  catch
+    let data_source = []
+  endtry
 
-        " show overloaded functions
-        let candidate.dup = 1
+  let output = []
+  for candidate in data_source
+    if stridx(candidate.word, a:base) != 0
+      continue
+    endif
 
-        let candidate.info = ""
+    " show overloaded functions
+    let candidate.dup = 1
 
-        " menu (extra information)
-        if has_key(candidate, "args")
-            " function type
-            let w = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
+    let candidate.info = ""
 
-            let candidate.abbr = s:abbr(w, max_menu_width)
-            let candidate.menu = ": " . candidate.returnType
-            let candidate.info = w . " : " . candidate.returnType
-        elseif has_key(candidate, "type")
-            " variable type
-            let candidate.abbr = s:abbr(candidate.word, max_menu_width)
-            let candidate.menu = ": " . candidate.type
-            let candidate.info = "var " . candidate.word . " : " . candidate.type
-        endif
+    " menu (extra information)
+    if has_key(candidate, "args")
+      " function type
+      let w = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
 
-        if has_key(candidate, "doc")
-            call s:addToInfo(candidate, "\n", s:format_doc(candidate.doc))
-        endif
+      let candidate.abbr = s:abbr(w, max_menu_width)
+      let candidate.menu = ": " . candidate.returnType
+      let candidate.info = w . " : " . candidate.returnType
+    elseif has_key(candidate, "type")
+      " variable type
+      let candidate.abbr = s:abbr(candidate.word, max_menu_width)
+      let candidate.menu = ": " . candidate.type
+      let candidate.info = "var " . candidate.word . " : " . candidate.type
+    endif
 
-        if has_key(candidate, "definedClass")
-            call s:addToInfo(candidate, "\n", "[" . candidate.definedClass . "]")
-        endif
+    if has_key(candidate, "doc")
+      call s:addToInfo(candidate, "\n", s:format_doc(candidate.doc))
+    endif
 
-        call add(output, candidate)
-    endfor
-  "catch
-  "  let output = []
-  "endtry
+    if has_key(candidate, "definedClass")
+      call s:addToInfo(candidate, "\n", "[" . candidate.definedClass . "]")
+    endif
 
+    call add(output, candidate)
+  endfor
   return output
 endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim:set et:
+" vim: set tabstop=2:
+" vim: set shiftwidth=2:
+" vim: set et:
