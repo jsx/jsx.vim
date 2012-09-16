@@ -20,6 +20,10 @@ Set the following command in your `.vimrc`:
     NeoBundle 'git://github.com/jsx/jsx.vim.git'
 ```
 
+# SCREENSHOT
+
+![screenshot](screenshot.png)
+
 # AUTHOR
 
 Fuji Goro (gfx) <fuji.goro@dena.jp>
