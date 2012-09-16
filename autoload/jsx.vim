@@ -6,6 +6,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+let s:jsx_complete_ignore_syntax_type = {
+      \ "jsxComment" : 1,
+      \ "jsxLineComment" : 1,
+      \ "jsxStringD" : 1,
+      \ "jsxStringS" : 1,
+      \ "jsxRegExp" : 1
+      \ }
 
 function! s:abbr(word, maxlen) abort
   if strdisplaywidth(a:word) > a:maxlen
@@ -69,6 +76,11 @@ endfunction
 
 function! jsx#complete(findstart, base) abort
   if a:findstart
+    " see :help complete-functions
+    if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
+      return -3
+    endif
+
     let line = getline('.')
     let pos = col('.')
     if pos == col('$')
@@ -80,6 +92,10 @@ function! jsx#complete(findstart, base) abort
       endwhile
     endif
     return pos
+  endif
+
+  if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
+    return []
   endif
 
   let input_content = join(getline(1, '$'), "\n")
