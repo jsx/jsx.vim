@@ -6,6 +6,20 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+let g:jsx_completion_max_menu_width = 22
+
+function! s:abbr(word) abort
+    let width  = winwidth(winnr())
+    let cursor = wincol()
+    let maxlen = width - cursor - g:jsx_completion_max_menu_width
+    echo cursor
+    if strdisplaywidth(a:word) > maxlen
+        return a:word[0 : maxlen]. " ..."
+    else
+        return a:word
+    endif
+endfunction
+
 " borrowed from html.vim in https://github.com/mattn/webapi-vim
 
 function! s:nr2byte(nr)
@@ -81,38 +95,39 @@ function! jsx#complete(findstart, base) abort
             continue
         endif
 
-        " menu (extra information)
-        if has_key(candidate, "returnType")
-            " function type
-            let candidate.abbr = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
-            let candidate.menu = ": " . candidate.returnType
-        elseif has_key(candidate, "type")
-            " variable type
-            let candidate.menu = ": " . candidate.type
-        endif
-
         let candidate.info = ""
 
-        " info (preview window)
-        if has_key(candidate, "type")
-            let candidate.info =  candidate.type
+        " menu (extra information)
+        if has_key(candidate, "args")
+            " function type
+            let w = candidate.word . "(" . join(map(candidate.args, 'v:val.name . " : " . v:val.type'), ", ") . ")"
+
+            let candidate.abbr = s:abbr(w)
+            let candidate.menu = ": " . candidate.returnType
+            let candidate.info = w . " : " . candidate.returnType
+        elseif has_key(candidate, "type")
+            " variable type
+            let candidate.abbr = s:abbr(candidate.word)
+            let candidate.menu = ": " . candidate.type
+            let candidate.info = "var " . candidate.word . " : " . candidate.type
         endif
 
         if has_key(candidate, "doc")
-            if (candidate.info)
+            if strlen(candidate.info) > 0
                 let candidate.info = candidate.info . "\n" . s:format_doc(candidate.doc)
             else
                 let candidate.info = s:format_doc(candidate.doc)
             endif
         endif
 
-        if strlen(candidate.info) > 0
-            let candidate.info = candidate.info . "\n[" . candidate.kind . "]"
-        else
-            let candidate.info = "[" . candidate.kind . "]"
+        if has_key(candidate, "definedClass")
+            if strlen(candidate.info) > 0
+                let candidate.info = candidate.info . "\n[" . candidate.definedClass. "]"
+            else
+                let candidate.info = "[" . candidate.definedClass . "]"
+            endif
         endif
 
-        call remove(candidate, "kind")
         call add(output, candidate)
     endfor
   "catch
