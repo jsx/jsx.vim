@@ -67,7 +67,7 @@ syn keyword jsxDebug		debugger assert log
 " jsxdoc
 syn region  jsxDocComment start="/\*\*"  end="\*/" contains=@Spell,jsxDocTags,jsxCommentTodo
 syn match   jsxDocTags     contained /@\(param\|return\)\>/
-syn match   jsxDocTags     contained /@\(see\|deprecated\|since\)>/
+syn match   jsxDocTags     contained /@\(see\|deprecated\|since\)\>/
 syn match   jsxDocTags     contained /@\(author\|version\)\>/
 
 if exists("jsx_fold")
