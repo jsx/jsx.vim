@@ -22,7 +22,7 @@ Set the following command in your `.vimrc`:
 
 # SCREENSHOT
 
-![screenshot](jsx.vim/master/screenshot.png)
+![screenshot](https://raw.github.com/jsx/jsx.vim/master/screenshot.png)
 
 # AUTHOR
 
