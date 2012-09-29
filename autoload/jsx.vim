@@ -2,6 +2,8 @@
 " Maintainer:  Fuji, Goro (gfx) <fuji.goro@dena.jp>
 " URL:         http://github.com/jsx/jsx.vim
 " License:     MIT License
+"
+" JSX omni-complition function
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -63,7 +65,7 @@ function! s:format_doc(str) abort
     return str
 endfunction
 
-function! s:addToInfo(candidate, sep, message)
+function! s:add_to_info(candidate, sep, message)
     if strlen(a:candidate.info) > 0
         let a:candidate.info = a:candidate.info . a:sep . a:message
     else
@@ -71,13 +73,7 @@ function! s:addToInfo(candidate, sep, message)
     endif
 endfunction
 
-function! jsx#complete(findstart, base) abort
-  if a:findstart
-    " see :help complete-functions
-    if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
-      return -3
-    endif
-
+function! s:current_word_starting_pos() abort
     let line = getline('.')
     let pos = col('.')
     if pos == col('$')
@@ -89,12 +85,9 @@ function! jsx#complete(findstart, base) abort
       endwhile
     endif
     return pos
-  endif
+endfunction
 
-  if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
-    return []
-  endif
-
+function! s:get_data_source()
   let input_content = join(getline(1, '$'), "\n")
 
   let command = printf('%s --input-filename %s --complete %d:%d -- -',
@@ -103,10 +96,6 @@ function! jsx#complete(findstart, base) abort
         \  line('.'), col('.')
         \)
 
-  let max_menu_width = winwidth(winnr())
-        \ - wincol()
-        \ - get(g:, 'jsx_complete_max_menu_width', 22)
-
   try
     let ret = system(command, input_content)
     sandbox let data_source = eval(ret)
@@ -114,9 +103,45 @@ function! jsx#complete(findstart, base) abort
     let data_source = []
   endtry
 
+  return data_source
+endfunction
+
+function! s:is_completion_for_this(base)
+  let this_pos = col('.') - len(a:base) - len("this.") - 1
+  if this_pos >= 0
+    return stridx(getline(".")[this_pos : ], "this.") == 0
+  else
+    return 0
+  endif
+endfunction
+
+function! jsx#complete(findstart, base) abort
+  if a:findstart
+    " see :help complete-functions
+    if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
+      return -3
+    endif
+    return s:current_word_starting_pos()
+  endif
+
+  let data_source = s:get_data_source()
+
+  let is_completion_for_this = s:is_completion_for_this(a:base)
+  
+  let max_menu_width = winwidth(winnr())
+        \ - wincol()
+        \ - get(g:, 'jsx_complete_max_menu_width', 22)
+
+
+  let show_private = (len(a:base) > 0 && a:base[0] == "_") || is_completion_for_this
+
   let output = []
   for candidate in data_source
     if stridx(candidate.word, a:base) != 0
+      continue
+    endif
+
+    if candidate.word[0] == "_" && !show_private
       continue
     endif
 
@@ -143,11 +168,15 @@ function! jsx#complete(findstart, base) abort
     endif
 
     if has_key(candidate, "doc") && strlen(candidate.doc) > 0
-      call s:addToInfo(candidate, "\n", s:format_doc(candidate.doc))
+      call s:add_to_info(candidate, "\n", s:format_doc(candidate.doc))
     endif
 
     if has_key(candidate, "definedClass")
-      call s:addToInfo(candidate, "\n", "[" . candidate.definedClass . "]")
+      call s:add_to_info(candidate, "\n", "[" . candidate.definedClass . "]")
+    endif
+
+    if strlen(candidate.info) == 0
+      let candidate.info = candidate.word
     endif
 
     call add(output, candidate)
