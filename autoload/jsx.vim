@@ -87,6 +87,7 @@ function! s:current_word_starting_pos() abort
     return pos
 endfunction
 
+
 function! s:get_data_source()
   let input_content = join(getline(1, '$'), "\n")
 
@@ -182,6 +183,31 @@ function! jsx#complete(findstart, base) abort
     call add(output, candidate)
   endfor
   return output
+endfunction
+
+function! jsx#test_it() abort
+  let l = line('.')
+  let c = col('.')
+
+  let pattern = '\(test\w\+\).*'
+
+  if search(pattern, 'b') == 0
+    return "no test method found"
+  endif
+
+  let test_name = substitute(getline('.')[col('.')-1 : ], pattern, '\1', '')
+
+  echo test_name
+
+  call cursor(l, c)
+
+  let command = printf('%s --input-filename %s --test -- - %s',
+        \  get(g:, 'jsx_command', 'jsx'),
+        \  shellescape(bufname('%')),
+        \  test_name
+        \)
+  let input_content = join(getline(1, '$'), "\n")
+  return system(command, input_content)
 endfunction
 
 let &cpo = s:save_cpo

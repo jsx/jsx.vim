@@ -20,6 +20,10 @@ Set the following command in your `.vimrc`:
     NeoBundle 'git://github.com/jsx/jsx.vim.git'
 ```
 
+# KEY BINDINGS
+
+* normal mode `t` executes the current test method
+
 # SCREENSHOT
 
 ![screenshot](https://raw.github.com/jsx/jsx.vim/master/screenshot.png)

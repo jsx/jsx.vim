@@ -6,6 +6,8 @@
 
 setlocal omnifunc=jsx#complete
 
+noremap t :echo jsx#test_it()<CR>
+
 compiler jsx
 
 " Tagbar http://majutsushi.github.com/tagbar/
