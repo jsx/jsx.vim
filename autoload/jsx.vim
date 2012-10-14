@@ -197,8 +197,6 @@ function! jsx#test_it() abort
 
   let test_name = substitute(getline('.')[col('.')-1 : ], pattern, '\1', '')
 
-  echo test_name
-
   call cursor(l, c)
 
   let command = printf('%s --input-filename %s --test -- - %s',
