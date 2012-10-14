@@ -6,7 +6,7 @@
 
 setlocal omnifunc=jsx#complete
 
-noremap t :echo jsx#test_it()<CR>
+noremap t :call jsx#test_it()<CR>
 
 compiler jsx
 

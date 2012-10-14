@@ -191,8 +191,9 @@ function! jsx#test_it() abort
 
   let pattern = '\(test\w\+\).*'
 
-  if search(pattern, 'b') == 0
-    return "no test method found"
+  if search(pattern, 'bcW') == 0
+    echo "no test method found"
+    return
   endif
 
   let test_name = substitute(getline('.')[col('.')-1 : ], pattern, '\1', '')
@@ -205,7 +206,7 @@ function! jsx#test_it() abort
         \  test_name
         \)
   let input_content = join(getline(1, '$'), "\n")
-  return system(command, input_content)
+  echo system(command, input_content)
 endfunction
 
 let &cpo = s:save_cpo
