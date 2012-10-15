@@ -6,7 +6,7 @@
 
 setlocal omnifunc=jsx#complete
 
-nnoremap <silent> <plug>(jsx-test) :<C-u> :call jsx#test_it()<CR>
+nnoremap <silent> <plug>(jsx-test) :<c-u>call jsx#test_it()<CR>
 
 if !get(g:, 'jsx_no_default_key_mappings', 0)
     nmap <unique> <buffer> <leader>t <plug>(jsx-test)

@@ -22,7 +22,7 @@ Set the following command in your `.vimrc`:
 
 # KEY BINDINGS
 
-* normal mode `t` executes the current test method
+* `\t` in normal mode executes the current test method
 * `g:jsx_no_default_key_mappings` prevents default key mappings
 
 # SCREENSHOT
