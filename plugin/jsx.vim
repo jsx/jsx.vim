@@ -5,5 +5,6 @@
 
 autocmd! BufRead,BufNewFile *.jsx setlocal filetype=jsx
 
-autocmd! BufNewFile *.jsx   0r <sfile>:h/../template/jsx-app.jsx
-autocmd! BufNewFile t/*.jsx 0r <sfile>:h/../template/jsx-test.jsx
+autocmd! BufNewFile *.jsx     0r <sfile>:h/../template/jsx-app.jsx
+autocmd! BufNewFile lib/*.jsx 0r <sfile>:h/../template/jsx-module.jsx
+autocmd! BufNewFile t/*.jsx   0r <sfile>:h/../template/jsx-test.jsx
