@@ -58,7 +58,7 @@ syn keyword jsxModifiers	final override native __fake__ extends abstract static 
 syn keyword jsxImport		import from into
 syn keyword jsxEntryPoint	_Main _Test
 " reserved by ECMA-262 but not used in JSX
-syn keyword jsxReserved		enum export let private public protected arguments eval with
+syn keyword jsxReserved		enum export let private public protected arguments with
 " reserved by Google Closure Compiler
 " defined in src/com/google/javascript/rhino/TokenStream.java
 syn keyword jsxGCCReserved	byte char double float long short goto synchronized throws transient volatile
