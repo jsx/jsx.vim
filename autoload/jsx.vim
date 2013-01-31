@@ -119,8 +119,8 @@ endfunction
 function! jsx#complete(findstart, base) abort
   if a:findstart
     " see :help complete-functions
-    if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.'), 0), "name"))
-      return -3
+    if has_key(s:jsx_complete_ignore_syntax_type, synIDattr(synID(line('.'), col('.')-1, 0), "name"))
+      return -2
     endif
     return s:current_word_starting_pos()
   endif
