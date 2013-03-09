@@ -25,7 +25,9 @@ Set the following command in your `.vimrc`:
 * `<Leader>t` (i.e. `\t` by default) in normal mode executes the current test method
 * `g:jsx_no_default_key_mappings` prevents default key mappings
 
-# SCREENSHOT
+# CODE COMPLETION
+
+There is an experimental code completion invoked by omni function (<code>^x^o</code>) with <code>jsx --complete</code>.
 
 ![screenshot](https://raw.github.com/jsx/jsx.vim/master/screenshot.png)
 
