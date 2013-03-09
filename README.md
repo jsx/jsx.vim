@@ -27,7 +27,7 @@ Set the following command in your `.vimrc`:
 
 # CODE COMPLETION
 
-There is an experimental code completion invoked by omni function (<code>^x^o</code>) with <code>jsx --complete</code>.
+There is an experimental code completion invoked by omni function (<code>^x^o</code>) as an interface to <code>jsx --complete</code>.
 
 ![screenshot](https://raw.github.com/jsx/jsx.vim/master/screenshot.png)
 
