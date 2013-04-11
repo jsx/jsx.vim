@@ -47,7 +47,7 @@ syn keyword jsxBranch		break continue
 syn keyword jsxOperator		new delete in instanceof typeof as __noconvert__
 syn keyword jsxType		Array boolean Boolean Date number Number Map int Object string String RegExp JSON Nullable variant void
 syn keyword jsxException	Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
-syn keyword jsxStatement	return var const
+syn keyword jsxStatement	return var const yield
 syn keyword jsxBoolean		true false
 syn keyword jsxNull		null
 syn keyword jsxIdentifier	this __FILE__ __LINE__
