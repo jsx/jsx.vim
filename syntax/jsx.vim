@@ -45,7 +45,8 @@ syn keyword jsxConditional	if else switch
 syn keyword jsxRepeat		while for do
 syn keyword jsxBranch		break continue
 syn keyword jsxOperator		new delete in instanceof typeof as __noconvert__
-syn keyword jsxType		Array boolean Boolean Date number Number Map int Object string String RegExp JSON Nullable variant void
+syn keyword jsxType		Array boolean Boolean Date number Number Map int Object string String RegExp JSON Nullable variant void JSX Transferable ArrayBuffer ArrayBufferView Int8Array Uint8Array Uint8ClampedArray Int16Array Uint16Array Int32Array Uint32Array Float32Array Float64Array DataView
+
 syn keyword jsxException	Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 syn keyword jsxStatement	return var const yield
 syn keyword jsxBoolean		true false
