@@ -92,7 +92,7 @@ function! s:get_data_source()
   let input_content = join(getline(1, '$'), "\n")
 
   let command = printf('%s --input-filename %s --complete %d:%d -- -',
-        \  get(g:, 'jsx_command', 'jsx'),
+        \  get(g:, 'jsx_command', 'jsx-with-server'),
         \  shellescape(bufname('%')),
         \  line('.'), col('.')
         \)
