@@ -51,11 +51,11 @@ syn keyword jsxException	Error EvalError RangeError ReferenceError SyntaxError T
 syn keyword jsxStatement	return var const yield
 syn keyword jsxBoolean		true false
 syn keyword jsxNull		null
-syn keyword jsxIdentifier	this __FILE__ __LINE__
+syn keyword jsxIdentifier	this super __FILE__ __LINE__
 syn keyword jsxLabel		case default
 syn keyword jsxException	try catch finally throw
 syn keyword jsxClass		class interface mixin
-syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__
+syn keyword jsxModifiers	final override native __fake__ extends abstract static implements __readonly__ __pure__
 syn keyword jsxImport		import from into
 syn keyword jsxEntryPoint	_Main _Test
 " reserved by ECMA-262 but not used in JSX
