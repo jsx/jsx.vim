@@ -30,10 +30,25 @@ class _Main {
 		var s0 = "\x0a\x0d";
 		var s1 = "\u000d";
 
+		var ms = """
+			foo
+			bar
+		""";
+
 		log true;
 		log false;
 		log null;
 		log Infinity;
 		log NaN;
+
+		try {
+			throw new Error();
+		}
+		catch (e : Error) {
+
+		}
+		finally {
+			log "finally";
+		}
 	}
 }

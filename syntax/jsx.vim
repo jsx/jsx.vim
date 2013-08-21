@@ -28,12 +28,14 @@ syn match   jsxLineComment	"\/\/.*" contains=@Spell,jsxCommentTodo
 syn match   jsxCommentSkip	"^[ \t]*\*\($\|[ \t]\+\)"
 syn region  jsxComment		start="/\*"  end="\*/" contains=@Spell,jsxCommentTodo
 
-syn match   jsxSpecial		/\\x\x\{2\}\|\\u\x\{4\}\|\\./
-syn region  jsxStringD		start=+"+  skip=+\\\\\|\\"+  end=+"\|$+	contains=jsxSpecial,@htmlPreproc
-syn region  jsxStringS		start=+'+  skip=+\\\\\|\\'+  end=+'\|$+	contains=jsxSpecial,@htmlPreproc
+syn match   jsxEscape		/\\x\x\{2\}\|\\u\x\{4\}\|\\./
+syn region  jsxString		start=+"+  skip=+\\\\\|\\"+  end=+"\|$+	contains=jsxEscape,@Special
+syn region  jsxString		start=+'+  skip=+\\\\\|\\'+  end=+'\|$+	contains=jsxEscape,@htmlPreproc
+syn region  jsxString		start=+"""+ end=+"""+ keepend contains=jsxEscape,@htmlPreproc
+syn region  jsxString		start=+'''+ end=+'''+ keepend contains=jsxEscape,@htmlPreproc
 " 15.10.1 Patterns (ECMA 262 5th)
 syn match   jsxRegExpMeta	/\\[\\bwWsSdD]/
-syn region  jsxRegExp		start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gim]*\s*$+ end=+/[gim]*\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc,jsxRegExpMeta,jsxSpecial oneline
+syn region  jsxRegExp		start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gim]*\s*$+ end=+/[gim]*\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc,jsxRegExpMeta,jsxEscape oneline
 
 " see the JSX parser
 syn match   jsxInteger		/\<\d\+\>\|\<0[xX][0-9a-fA-F]\+\>/
@@ -109,9 +111,8 @@ if version >= 508 || !exists("did_jsx_syn_inits")
   HiLink jsxComment		Comment
   HiLink jsxLineComment		Comment
   HiLink jsxCommentTodo		Todo
-  HiLink jsxSpecial		Special
-  HiLink jsxStringS		String
-  HiLink jsxStringD		String
+  HiLink jsxEscape		Special
+  HiLink jsxString		String
   HiLink jsxInteger		Number
   HiLink jsxFloat		Number
   HiLink jsxFloatX		Number
