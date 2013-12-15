@@ -189,7 +189,7 @@ function! jsx#test_it() abort
   let l = line('.')
   let c = col('.')
 
-  let pattern = '\(test\w\+\).*'
+  let pattern = '\(\C\<test\w\+\).*'
 
   if search(pattern, 'bcW') == 0
     echo "no test method found"
